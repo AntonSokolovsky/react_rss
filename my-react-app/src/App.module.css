@@ -5,6 +5,22 @@
   text-align: center;
 }
 
+.myApp {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.searchSection {
+  display: flex;
+  justify-content: center;
+  border: solid 1px black;
+}
+
+.listsSection {
+  display: flex;
+  justify-content: center;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

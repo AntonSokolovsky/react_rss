@@ -1,0 +1,10 @@
+.cardsWrap {
+    display: flex;
+    justify-content: center;
+}
+
+.cardsList {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}

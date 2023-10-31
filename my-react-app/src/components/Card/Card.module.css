@@ -1,0 +1,19 @@
+.cardWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cardImage {
+    display: block;
+}
+
+.cardTitle {
+    display: block;
+}
+
+.cardList {
+    display: flex;
+    flex-direction: column;
+}
+
