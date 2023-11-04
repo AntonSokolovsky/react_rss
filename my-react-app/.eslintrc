@@ -4,6 +4,7 @@
       "plugin:react/recommended",
       "plugin:@typescript-eslint/recommended",
       "plugin:react-hooks/recommended",
+      "plugin:prettier/recommended",
       "prettier"
     ],
     "parser": "@typescript-eslint/parser",
@@ -37,7 +38,9 @@
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-var-requires": "off",
       "react/jsx-uses-react": "off",
-      "react/react-in-jsx-scope": "off"
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": "error",
+      "no-console": "error"
     },
     "settings": {
       "react": {

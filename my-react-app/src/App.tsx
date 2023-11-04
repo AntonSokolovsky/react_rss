@@ -4,6 +4,7 @@ import SearchBar from './components/SearchBar/Search'
 import Cards from './components/Cards/Cards'
 
 export default class App extends Component {
+  let x = 1;
  render(): ReactNode {
    return (
     <div className={styles.myApp}>
