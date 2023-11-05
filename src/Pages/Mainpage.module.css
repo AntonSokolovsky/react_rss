@@ -1,10 +1,14 @@
 
   .myApp {
     display: flex;
-    flex-direction: column;
     justify-content: flex-start;
   }
   
+  .mainPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
   .searchSection {
     display: flex;
     justify-content: center;
@@ -49,5 +53,25 @@
   
   .read-the-docs {
     color: #888;
+  }
+
+  .outlet {
+    position: relative;
+    z-index: 2;
+    min-width: 45vw;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(248, 249, 250, 0.7);
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    /* overflow: hidden; */
   }
   

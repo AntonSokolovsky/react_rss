@@ -23,6 +23,7 @@ export default function Mainpage() {
   const [page, setPage] = useState<number>(1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const openDetails = () => setIsOpen(true);
+  const closeDetails = () => setIsOpen(false);
 
   const getData = (value: string) => {
     fetch(`${value}&name=${searchValue}`)
@@ -45,8 +46,9 @@ export default function Mainpage() {
 
   return (
     <div className={styles.myApp}>
-      <h1>Rick & Morty characters</h1>
-      <div>
+      {/* <h1>Rick & Morty characters</h1> */}
+      <div className={styles.mainPage}>
+        <h1>Rick & Morty characters</h1>
         <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
         <Cards characters={characters} openDetails={openDetails} />
         {!!characters?.length && (
@@ -58,7 +60,12 @@ export default function Mainpage() {
           />
         )}
       </div>
-      {isOpen && <div>{<Outlet />}</div>}
+      {isOpen && (
+        <div className={styles.outlet}>
+          {<Outlet />}
+          <div className={styles.overlay} onClick={closeDetails}></div>
+        </div>
+      )}
     </div>
   );
 }
