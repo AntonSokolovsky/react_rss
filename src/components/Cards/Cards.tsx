@@ -7,8 +7,12 @@ export default function Cards(props: CardsProps) {
   return (
     <section className={styles.cardsWrap}>
       <ul className={styles.cardsList}>
-        {props.characters.map((item) => (
-          <Card {...item} key={item.id} />
+        {props.characters?.map((item) => (
+          <Card
+            openDetails={props.openDetails}
+            character={item}
+            key={item.id}
+          />
         ))}
       </ul>
     </section>

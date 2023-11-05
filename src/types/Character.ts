@@ -1,4 +1,4 @@
-export type Character = {
+export interface ICharacter {
   id: number;
   name: string;
   status?: string;
@@ -17,8 +17,9 @@ export type Character = {
   episode?: string[];
   url?: string;
   created?: string;
-};
+}
 
 export type CardsProps = {
-  characters: Array<Character>;
+  characters: ICharacter[];
+  openDetails: () => void;
 };

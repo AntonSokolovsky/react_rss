@@ -1,19 +1,15 @@
 .cardWrap {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: aliceblue;
-    width: 150px;
+    justify-content: center;
 }
 
 .cardImage {
     display: block;
-    width: 150px;
-    height: 150px;
 }
 
 .cardTitle {
-    display: inline;
+    display: block;
 }
 
 .cardList {

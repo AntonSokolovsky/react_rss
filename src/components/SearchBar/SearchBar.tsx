@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { ISearchBarProps } from './SearchBar.type';
 import styles from './SearchBar.module.css';
-import Api from '../Api/api';
 
-export default function Search() {
-  const [value, setValue] = useState('');
+export default function Search({
+  searchValue,
+  setSearchValue,
+}: ISearchBarProps) {
+  const [value, setValue] = useState(searchValue);
 
-  async function search() {
-    const data = await Api.searchCharactersByName(value);
-    return data.results;
+  function search() {
+    setSearchValue(value);
+    localStorage.setItem('searchValue', searchValue);
   }
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
 
   return (
     <section className={styles.searchWrap}>
       <input
         className={styles.searchInput}
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={handleChange}
       />
       <button onClick={search} type="button" className={styles.searchButton}>
         search

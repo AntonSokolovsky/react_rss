@@ -1,32 +1,38 @@
-import { Character } from '../../types/Character';
+import { useNavigate } from 'react-router-dom';
 import styles from './Card.module.css';
-import React from 'react';
+import { ICardProps } from './Card.type';
 
-export default function Card(props: Character) {
+export default function Card(props: ICardProps) {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    props.openDetails();
+    navigate(`/home/${props.character.id}`);
+  };
   return (
     <article className={styles.cardWrap}>
       <img
-        src={props.image}
-        alt={props.name + 'photo'}
+        src={props.character.image}
+        alt={props.character.name + 'photo'}
         className={styles.cardImage}
-      ></img>
-      <h3 className={styles.cardTitle}>{props.name}</h3>
+        onClick={handleNavigate}
+      />
+      <h3 className={styles.cardTitle}>{props.character.name}</h3>
       <ul className={styles.cardList}>
         <li className={styles.cardField}>
           <span className={styles.cardFieldName}>Type: </span>
-          {props.type}
+          {props.character.type}
         </li>
         <li className={styles.cardField}>
           <span className={styles.cardFieldName}>Gender: </span>
-          {props.gender}
+          {props.character.gender}
         </li>
         <li className={styles.cardField}>
           <span className={styles.cardFieldName}>Species: </span>
-          {props.species}
+          {props.character.species}
         </li>
         <li className={styles.cardField}>
           <span className={styles.cardFieldName}>Status: </span>
-          {props.status}
+          {props.character.status}
         </li>
       </ul>
     </article>
