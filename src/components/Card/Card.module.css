@@ -1,0 +1,30 @@
+.cardWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: aliceblue;
+    width: 150px;
+}
+
+.cardImage {
+    display: block;
+    width: 150px;
+    height: 150px;
+}
+
+.cardTitle {
+    display: inline;
+}
+
+.cardList {
+    display: flex;
+    flex-direction: column;
+}
+
+.cardField {
+    display: block;
+}
+
+.cardFieldName {
+    font-weight: bold;
+}
