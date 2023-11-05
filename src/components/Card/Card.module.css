@@ -17,3 +17,10 @@
     flex-direction: column;
 }
 
+.cardField {
+    display: block;
+}
+
+.cardFieldName {
+    font-weight: bold;
+}
