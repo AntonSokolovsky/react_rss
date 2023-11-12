@@ -1,14 +1,16 @@
 import SearchBar from '../components/SearchBar/SearchBar';
 import Cards from '../components/Cards/Cards';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './Mainpage.module.css';
 import { IResponse } from '../types/Response';
 import { ICharacter } from '../types/Character';
 import { Pagination } from '../components/Pagination/Pagination';
 import { getPageNumber } from '../Utils/getPageNumber';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { IsOpenDetailsContext } from '../Context/Context';
 
 export default function Mainpage() {
+  const { isOpenDetails, setIsOpenDetails } = useContext(IsOpenDetailsContext); //?how do we need to type
   // const [searchParams, setSearchParams] = useSearchParams();
   const [, setSearchParams] = useSearchParams();
   // const pageNumberQuery = searchParams.get('page') || 1;
@@ -26,11 +28,13 @@ export default function Mainpage() {
   );
 
   const [page, setPage] = useState<number>(1);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const openDetails = () => setIsOpen(true);
+  // const [isOpen, setIsOpen] = useState<boolean>(false);
+  // const openDetails = () => setIsOpen(true);
+  const openDetails = () => setIsOpenDetails(true);
   const closeDetails = () => {
-    setIsOpen(false);
-    navigate('/home');
+    // setIsOpen(false);
+    setIsOpenDetails(false);
+    navigate('/home'); //?
   };
 
   const getData = (value: string) => {
@@ -69,7 +73,8 @@ export default function Mainpage() {
           />
         )}
       </div>
-      {isOpen && (
+      {/* {isOpen && ( */}
+      {isOpenDetails && (
         <div className={styles.outlet}>
           {<Outlet />}
           <div className={styles.overlay} onClick={closeDetails}></div>

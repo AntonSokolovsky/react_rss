@@ -1,6 +1,13 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from './Router/Router';
+import { useState } from 'react';
+import { IsOpenDetailsContext } from './Context/Context';
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  const [isOpenDetails, setIsOpenDetails] = useState<boolean>(false);
+  return (
+    <IsOpenDetailsContext.Provider value={{ isOpenDetails, setIsOpenDetails }}>
+      <RouterProvider router={router} />
+    </IsOpenDetailsContext.Provider>
+  );
 }
