@@ -21,5 +21,4 @@ export interface ICharacter {
 
 export type CardsProps = {
   characters: ICharacter[];
-  openDetails: () => void;
 };

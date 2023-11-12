@@ -17,13 +17,6 @@ const CharacterDetails = lazy(
 export const router = createBrowserRouter([
   {
     path: '/',
-    // Component() {
-    //   return (
-    //     <IsOpenDetailsContext.Provider value={value}>
-    //       <Outlet />
-    //     </IsOpenDetailsContext.Provider>
-    //   );
-    // },
     element: <Layout />,
     children: [
       {

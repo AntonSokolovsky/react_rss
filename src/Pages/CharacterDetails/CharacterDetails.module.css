@@ -1,29 +1,37 @@
 .cardWrap {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: fixed;
-    right: 5%;
-    z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  right: 5%;
+  z-index: 3;
 }
 
 .cardImage {
-    display: block;
+  display: block;
 }
 
 .cardTitle {
-    display: block;
+  display: block;
 }
 
 .cardList {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .cardField {
-    display: block;
+  display: block;
 }
 
 .cardFieldName {
-    font-weight: bold;
+  font-weight: bold;
+}
+.cardWrapper {
+  position: relative;
+  z-index: 2;
+  min-width: 45vw;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 }

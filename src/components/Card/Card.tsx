@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './Card.module.css';
 import { ICardProps } from './Card.type';
+import { useCharacterDetailsContext } from '../../store';
 
 export default function Card(props: ICardProps) {
+  const { setIsOpen } = useCharacterDetailsContext();
   const navigate = useNavigate();
   const handleNavigate = () => {
-    props.openDetails();
+    setIsOpen(true);
     navigate(`/home/${props.character.id}`);
   };
   return (

@@ -1,48 +1,36 @@
 import SearchBar from '../components/SearchBar/SearchBar';
 import Cards from '../components/Cards/Cards';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Mainpage.module.css';
 import { IResponse } from '../types/Response';
 import { Pagination } from '../components/Pagination/Pagination';
 import { getPageNumber } from '../Utils/getPageNumber';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import {
-  CharactersContext,
-  IsOpenDetailsContext,
-  SearchValueContext,
-} from '../Context/Context';
+  useCharacterDetailsContext,
+  useCharactersContext,
+  useSearchValueContext,
+} from '../store';
 
 export default function Mainpage() {
-  const { isOpenDetails, setIsOpenDetails } = useContext(IsOpenDetailsContext); //?how do we need to type
+  const { isOpen, setIsOpen: setIsOpenDetails } = useCharacterDetailsContext(); //?how do we need to type
+  const { searchValue } = useSearchValueContext();
+  const { characters, setCharacters } = useCharactersContext();
 
-  const { searchValue, setSearchValue } = useContext(SearchValueContext);
-
-  const { characters, setCharacters } = useContext(CharactersContext);
-
-  // const [searchParams, setSearchParams] = useSearchParams();
   const [, setSearchParams] = useSearchParams();
-  // const pageNumberQuery = searchParams.get('page') || 1;
-  // const searchQuery = searchParams.get('search');
   const navigate = useNavigate();
-  // const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [pagination, setPagination] = useState<IResponse['info']>({
     count: 0,
     pages: 0,
     next: null,
     prev: null,
   });
-  // const [searchValue, setSearchValue] = useState<string>(
-  //   () => localStorage.getItem('searchValue') || ''
-  // );
 
   const [page, setPage] = useState<number>(1);
-  // const [isOpen, setIsOpen] = useState<boolean>(false);
-  // const openDetails = () => setIsOpen(true);
-  const openDetails = () => setIsOpenDetails(true);
+
   const closeDetails = () => {
-    // setIsOpen(false);
     setIsOpenDetails(false);
-    navigate('/home'); //?
+    navigate('/home');
   };
 
   const getData = (value: string) => {
@@ -62,16 +50,19 @@ export default function Mainpage() {
       .then((data) => {
         setCharacters(data.results);
         setPagination(data.info);
-        // setSearchParams({ page: page.toString() });
       });
   }, [searchValue, setCharacters]);
+
+  useEffect(() => {
+    setSearchParams({ page: page.toString() });
+  }, [setSearchParams, page]);
 
   return (
     <div className={styles.myApp}>
       <div className={styles.mainPage}>
         <h1>Rick & Morty characters</h1>
-        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
-        <Cards characters={characters} openDetails={openDetails} />
+        <SearchBar />
+        <Cards />
         {!!characters?.length && (
           <Pagination
             page={page}
@@ -81,13 +72,8 @@ export default function Mainpage() {
           />
         )}
       </div>
-      {/* {isOpen && ( */}
-      {isOpenDetails && (
-        <div className={styles.outlet}>
-          {<Outlet />}
-          <div className={styles.overlay} onClick={closeDetails}></div>
-        </div>
-      )}
+      <Outlet />
+      {isOpen && <div className={styles.overlay} onClick={closeDetails} />}
     </div>
   );
 }

@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import type { ChangeEvent } from 'react';
-import { ISearchBarProps } from './SearchBar.type';
 import styles from './SearchBar.module.css';
+import { useSearchValueContext } from '../../store';
 
-export default function Search({
-  searchValue,
-  setSearchValue,
-}: ISearchBarProps) {
+export default function Search() {
+  const { searchValue, setSearchValue } = useSearchValueContext();
   const [value, setValue] = useState(searchValue);
 
   function search() {
