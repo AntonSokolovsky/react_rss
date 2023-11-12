@@ -6,9 +6,14 @@ import { IResponse } from '../types/Response';
 import { ICharacter } from '../types/Character';
 import { Pagination } from '../components/Pagination/Pagination';
 import { getPageNumber } from '../Utils/getPageNumber';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 
 export default function Mainpage() {
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
+  // const pageNumberQuery = searchParams.get('page') || 1;
+  // const searchQuery = searchParams.get('search');
+  const navigate = useNavigate();
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [pagination, setPagination] = useState<IResponse['info']>({
     count: 0,
@@ -23,7 +28,10 @@ export default function Mainpage() {
   const [page, setPage] = useState<number>(1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const openDetails = () => setIsOpen(true);
-  const closeDetails = () => setIsOpen(false);
+  const closeDetails = () => {
+    setIsOpen(false);
+    navigate('/home');
+  };
 
   const getData = (value: string) => {
     fetch(`${value}&name=${searchValue}`)
@@ -32,6 +40,7 @@ export default function Mainpage() {
         setCharacters(data.results);
         setPagination(data.info);
         data.info && setPage(getPageNumber(data.info));
+        setSearchParams({ page: page.toString() });
       });
   };
 
@@ -41,12 +50,12 @@ export default function Mainpage() {
       .then((data) => {
         setCharacters(data.results);
         setPagination(data.info);
+        // setSearchParams({ page: page.toString() });
       });
-  }, [searchValue]);
+  }, [searchValue, page, setSearchParams]);
 
   return (
     <div className={styles.myApp}>
-      {/* <h1>Rick & Morty characters</h1> */}
       <div className={styles.mainPage}>
         <h1>Rick & Morty characters</h1>
         <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
