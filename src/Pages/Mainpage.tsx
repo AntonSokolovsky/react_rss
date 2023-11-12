@@ -3,29 +3,37 @@ import Cards from '../components/Cards/Cards';
 import { useContext, useEffect, useState } from 'react';
 import styles from './Mainpage.module.css';
 import { IResponse } from '../types/Response';
-import { ICharacter } from '../types/Character';
 import { Pagination } from '../components/Pagination/Pagination';
 import { getPageNumber } from '../Utils/getPageNumber';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import { IsOpenDetailsContext } from '../Context/Context';
+import {
+  CharactersContext,
+  IsOpenDetailsContext,
+  SearchValueContext,
+} from '../Context/Context';
 
 export default function Mainpage() {
   const { isOpenDetails, setIsOpenDetails } = useContext(IsOpenDetailsContext); //?how do we need to type
+
+  const { searchValue, setSearchValue } = useContext(SearchValueContext);
+
+  const { characters, setCharacters } = useContext(CharactersContext);
+
   // const [searchParams, setSearchParams] = useSearchParams();
   const [, setSearchParams] = useSearchParams();
   // const pageNumberQuery = searchParams.get('page') || 1;
   // const searchQuery = searchParams.get('search');
   const navigate = useNavigate();
-  const [characters, setCharacters] = useState<ICharacter[]>([]);
+  // const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [pagination, setPagination] = useState<IResponse['info']>({
     count: 0,
     pages: 0,
     next: null,
     prev: null,
   });
-  const [searchValue, setSearchValue] = useState<string>(
-    () => localStorage.getItem('searchValue') || ''
-  );
+  // const [searchValue, setSearchValue] = useState<string>(
+  //   () => localStorage.getItem('searchValue') || ''
+  // );
 
   const [page, setPage] = useState<number>(1);
   // const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -56,7 +64,7 @@ export default function Mainpage() {
         setPagination(data.info);
         // setSearchParams({ page: page.toString() });
       });
-  }, [searchValue, page, setSearchParams]);
+  }, [searchValue, setCharacters]);
 
   return (
     <div className={styles.myApp}>
