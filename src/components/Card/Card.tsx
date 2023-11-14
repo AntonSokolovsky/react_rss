@@ -11,7 +11,7 @@ export default function Card(props: ICardProps) {
     navigate(`/home/${props.character.id}`);
   };
   return (
-    <article className={styles.cardWrap}>
+    <article data-testid={'card'} className={styles.cardWrap}>
       <img
         src={props.character.image}
         alt={props.character.name + 'photo'}

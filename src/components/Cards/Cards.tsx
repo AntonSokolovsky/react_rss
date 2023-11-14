@@ -1,6 +1,5 @@
 import styles from './Cards.module.css';
 import Card from '../Card/Card';
-import { NavLink } from 'react-router-dom';
 import { useCharactersContext } from '../../store';
 
 export default function Cards() {
@@ -8,11 +7,7 @@ export default function Cards() {
   return (
     <section className={styles.cardsWrap}>
       <ul className={styles.cardsList}>
-        {characters?.map((item) => (
-          <NavLink key={item.id} to={`/home/${item.id}`}>
-            <Card character={item} key={item.id} />
-          </NavLink>
-        ))}
+        {characters?.map((item) => <Card character={item} key={item.id} />)}
       </ul>
     </section>
   );

@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from 'react';
 import { ICharactersProps, ICharacters } from './CharactersProvider.type';
 import { ICharacter } from '../../types/Character';
 
-const CharactersContext = createContext<ICharacters>({
+export const CharactersContext = createContext<ICharacters>({
   characters: [],
   setCharacters: () => {},
 });
