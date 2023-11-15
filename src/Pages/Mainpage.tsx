@@ -13,7 +13,7 @@ import {
 } from '../store';
 
 export default function Mainpage() {
-  const { isOpen, setIsOpen: setIsOpenDetails } = useCharacterDetailsContext(); //?how do we need to type
+  const { isOpen, setIsOpen: setIsOpenDetails } = useCharacterDetailsContext();
   const { searchValue } = useSearchValueContext();
   const { characters, setCharacters } = useCharactersContext();
 
