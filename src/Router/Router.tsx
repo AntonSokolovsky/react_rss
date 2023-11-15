@@ -1,13 +1,6 @@
-import {
-  Navigate,
-  // Outlet,
-  // Route,
-  createBrowserRouter,
-  // createRoutesFromElements,
-} from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { lazy } from 'react';
-// import { IsOpenDetailsContext } from '../Context/Context';
 
 const Mainpage = lazy(() => import('../Pages/Mainpage'));
 const CharacterDetails = lazy(
@@ -31,16 +24,3 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
-
-// export const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <IsOpenDetailsContext.Provider value={}>
-//       <Route path="/" element={<Layout />}>
-//         <Route index element={<Navigate to="/home" />} />
-//         <Route path={'home'} element={<Mainpage />}>
-//           <Route path=":characterId" element={<CharacterDetails />} />
-//         </Route>
-//       </Route>
-//     </IsOpenDetailsContext.Provider>
-//   )
-// );

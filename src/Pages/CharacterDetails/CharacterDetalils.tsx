@@ -28,10 +28,10 @@ function CharacterDetalils() {
   return (
     <>
       {isOpen ? (
-        <div className={styles.cardWrapper}>
+        <div data-testid={'detail'} className={styles.cardWrapper}>
           <div>
             {characterDetailPage && (
-              <article className={styles.cardWrap}>
+              <article data-testid={'details'} className={styles.cardWrap}>
                 <img
                   src={characterDetailPage.image}
                   alt={characterDetailPage.name + 'photo'}

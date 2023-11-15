@@ -4,7 +4,7 @@ import {
   ICharacterDetailsProps,
 } from './CharacterDetails.type';
 
-const CharacterDetailsContext = createContext<ICharacterDetails>({
+export const CharacterDetailsContext = createContext<ICharacterDetails>({
   isOpen: false,
   setIsOpen: () => {},
 });
