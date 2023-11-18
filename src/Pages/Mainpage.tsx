@@ -9,12 +9,14 @@ import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { useCharacterDetailsContext } from '../store';
 import { setCharacters } from '../ReduxStore';
 import { useAppDispatch, useAppSelector } from '../ReduxStore/hooks';
+import { useSearhCharactersQuery } from '../components/Api/CharactersApi';
 
 export default function Mainpage() {
   const { isOpen, setIsOpen: setIsOpenDetails } = useCharacterDetailsContext();
   const searchValue = useAppSelector((state) => state.search.searchValue);
   const characters = useAppSelector((state) => state.characters.list);
   const dispatch = useAppDispatch();
+  const { data } = useSearhCharactersQuery(searchValue);
 
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -44,13 +46,11 @@ export default function Mainpage() {
   };
 
   useEffect(() => {
-    fetch(`https://rickandmortyapi.com/api/character?name=${searchValue}`)
-      .then<IResponse>((data) => data.json())
-      .then((data) => {
-        dispatch(setCharacters(data.results));
-        setPagination(data.info);
-      });
-  }, [searchValue, dispatch]);
+    if (data) {
+      dispatch(setCharacters(data.results));
+      setPagination(data.info);
+    }
+  }, [dispatch, data]);
 
   useEffect(() => {
     setSearchParams({ page: page.toString() });
