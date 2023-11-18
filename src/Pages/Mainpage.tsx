@@ -6,13 +6,13 @@ import { IResponse } from '../types/Response';
 import { Pagination } from '../components/Pagination/Pagination';
 import { getPageNumber } from '../Utils/getPageNumber';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import { useCharacterDetailsContext, useSearchValueContext } from '../store';
+import { useCharacterDetailsContext } from '../store';
 import { setCharacters } from '../ReduxStore';
 import { useAppDispatch, useAppSelector } from '../ReduxStore/hooks';
 
 export default function Mainpage() {
   const { isOpen, setIsOpen: setIsOpenDetails } = useCharacterDetailsContext();
-  const { searchValue } = useSearchValueContext();
+  const searchValue = useAppSelector((state) => state.search.searchValue);
   const characters = useAppSelector((state) => state.characters.list);
   const dispatch = useAppDispatch();
 

@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import type { ChangeEvent } from 'react';
 import styles from './SearchBar.module.css';
-import { useSearchValueContext } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../ReduxStore/hooks';
+import { setSearchValue } from '../../ReduxStore/SearchSlice';
 
 export default function Search() {
-  const { searchValue, setSearchValue } = useSearchValueContext();
+  const searchValue = useAppSelector((state) => state.search.searchValue);
+  const dispatch = useAppDispatch();
   const [value, setValue] = useState(searchValue);
 
   function search() {
-    setSearchValue(value);
-    localStorage.setItem('searchValue', searchValue);
+    dispatch(setSearchValue(value));
+    localStorage.setItem('searchValue', value);
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
