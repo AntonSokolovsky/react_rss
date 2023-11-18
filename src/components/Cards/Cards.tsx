@@ -1,9 +1,11 @@
 import styles from './Cards.module.css';
 import Card from '../Card/Card';
-import { useCharactersContext } from '../../store';
+import { useAppSelector } from '../../ReduxStore/hooks';
 
 export default function Cards() {
-  const { characters } = useCharactersContext();
+  const characters = useAppSelector((state) => {
+    return state.characters.list;
+  });
   return (
     <section className={styles.cardsWrap}>
       <ul className={styles.cardsList}>

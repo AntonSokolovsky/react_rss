@@ -6,16 +6,15 @@ import { IResponse } from '../types/Response';
 import { Pagination } from '../components/Pagination/Pagination';
 import { getPageNumber } from '../Utils/getPageNumber';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import {
-  useCharacterDetailsContext,
-  useCharactersContext,
-  useSearchValueContext,
-} from '../store';
+import { useCharacterDetailsContext, useSearchValueContext } from '../store';
+import { setCharacters } from '../ReduxStore';
+import { useAppDispatch, useAppSelector } from '../ReduxStore/hooks';
 
 export default function Mainpage() {
   const { isOpen, setIsOpen: setIsOpenDetails } = useCharacterDetailsContext();
   const { searchValue } = useSearchValueContext();
-  const { characters, setCharacters } = useCharactersContext();
+  const characters = useAppSelector((state) => state.characters.list);
+  const dispatch = useAppDispatch();
 
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -37,7 +36,7 @@ export default function Mainpage() {
     fetch(`${value}&name=${searchValue}`)
       .then<IResponse>((data) => data.json())
       .then((data) => {
-        setCharacters(data.results);
+        dispatch(setCharacters(data.results));
         setPagination(data.info);
         data.info && setPage(getPageNumber(data.info));
         setSearchParams({ page: page.toString() });
@@ -48,10 +47,10 @@ export default function Mainpage() {
     fetch(`https://rickandmortyapi.com/api/character?name=${searchValue}`)
       .then<IResponse>((data) => data.json())
       .then((data) => {
-        setCharacters(data.results);
+        dispatch(setCharacters(data.results));
         setPagination(data.info);
       });
-  }, [searchValue, setCharacters]);
+  }, [searchValue, dispatch]);
 
   useEffect(() => {
     setSearchParams({ page: page.toString() });
