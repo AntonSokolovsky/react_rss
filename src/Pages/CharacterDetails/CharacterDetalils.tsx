@@ -4,13 +4,16 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { ICharacter } from '../../types/Character';
 import { useCharacterDetailsContext } from '../../store';
 import { useGetCharacterByIdQuery } from '../../components/Api/CharactersApi';
+import { useAppDispatch } from '../../ReduxStore/hooks';
+import { setIsLoadingDetails } from '../../ReduxStore';
 
 function CharacterDetalils() {
+  const dispatch = useAppDispatch();
   const { characterId } = useParams();
   const [characterDetailPage, setCaracterDetailPage] =
     useState<ICharacter | null>(null);
   const { isOpen, setIsOpen } = useCharacterDetailsContext();
-  const { data } = useGetCharacterByIdQuery(characterId || '');
+  const { data, isLoading } = useGetCharacterByIdQuery(characterId || '');
 
   useLayoutEffect(() => {
     if (isOpen) {
@@ -33,6 +36,10 @@ function CharacterDetalils() {
     }
     setCaracterDetailPage(data);
   }, [characterId, data]);
+
+  useEffect(() => {
+    dispatch(setIsLoadingDetails(isLoading));
+  }, [dispatch, isLoading]);
   return (
     <>
       {isOpen ? (

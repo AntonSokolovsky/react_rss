@@ -11,7 +11,7 @@ export default function Cards() {
     <section className={styles.cardsWrap}>
       <ul className={styles.cardsList}>
         {characters
-          ?.filter((item, index) => index < countCards)
+          ?.filter((_, index) => index < countCards)
           .map((item) => <Card character={item} key={item.id} />)}
       </ul>
     </section>

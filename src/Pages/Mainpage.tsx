@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../ReduxStore/hooks';
 import { useSearhCharactersQuery } from '../components/Api/CharactersApi';
 import { getEndpoint } from '../Utils/getEndpoint';
 import CountCards from '../components/CountCards/CountCards';
+import { setIsLoadingCards } from '../ReduxStore/IsLoadingCardsSlice/IsLoadingCardsSlice';
 
 export default function Mainpage() {
   const { isOpen, setIsOpen: setIsOpenDetails } = useCharacterDetailsContext();
@@ -19,7 +20,7 @@ export default function Mainpage() {
   const characters = useAppSelector((state) => state.characters.list);
   const countCards = useAppSelector((state) => state.countCards);
   const dispatch = useAppDispatch();
-  const { data } = useSearhCharactersQuery(searchValue);
+  const { data, isLoading } = useSearhCharactersQuery(searchValue);
 
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -69,6 +70,10 @@ export default function Mainpage() {
   useEffect(() => {
     setSearchParams({ page: page.toString() });
   }, [setSearchParams, page]);
+
+  useEffect(() => {
+    dispatch(setIsLoadingCards(isLoading));
+  }, [dispatch, isLoading]);
 
   return (
     <div className={styles.myApp}>
