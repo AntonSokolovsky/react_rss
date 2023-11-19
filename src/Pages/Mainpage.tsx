@@ -21,7 +21,6 @@ export default function Mainpage() {
   const { isOpen, setIsOpen: setIsOpenDetails } = useCharacterDetailsContext();
   const searchValue = useAppSelector(searchStateValue);
   const characters = useAppSelector((state) => state.characters.list);
-  const countCards = useAppSelector((state) => state.countCards);
   const dispatch = useAppDispatch();
   const { data, isLoading } = useSearhCharactersQuery(searchValue);
   const [getCharacters] = useLazyPaginationCharactersQuery();
@@ -59,7 +58,7 @@ export default function Mainpage() {
       dispatch(setCharacters(data.results));
       setPagination(data.info);
     }
-  }, [dispatch, data, countCards]);
+  }, [dispatch, data]);
 
   useEffect(() => {
     setSearchParams({ page: page.toString() });
