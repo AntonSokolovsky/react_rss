@@ -10,6 +10,11 @@ export const characterApi = createApi({
   endpoints: (build) => ({
     searhCharacters: build.query<IResponse, string>({
       query: (value = '') => ({
+        url: `/character?name=${value}`,
+      }),
+    }),
+    paginationCharacters: build.query<IResponse, string>({
+      query: (value = '') => ({
         url: `/character${value}`,
       }),
     }),
@@ -21,5 +26,8 @@ export const characterApi = createApi({
   }),
 });
 
-export const { useSearhCharactersQuery, useGetCharacterByIdQuery } =
-  characterApi;
+export const {
+  useSearhCharactersQuery,
+  useGetCharacterByIdQuery,
+  useLazyPaginationCharactersQuery,
+} = characterApi;

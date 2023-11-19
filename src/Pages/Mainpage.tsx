@@ -7,20 +7,24 @@ import { Pagination } from '../components/Pagination/Pagination';
 import { getPageNumber } from '../Utils/getPageNumber';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { useCharacterDetailsContext } from '../store';
-import { setCharacters, setSearchValue } from '../ReduxStore';
+import { searchStateValue, setCharacters } from '../ReduxStore';
 import { useAppDispatch, useAppSelector } from '../ReduxStore/hooks';
-import { useSearhCharactersQuery } from '../components/Api/CharactersApi';
+import {
+  useLazyPaginationCharactersQuery,
+  useSearhCharactersQuery,
+} from '../components/Api/CharactersApi';
 import { getEndpoint } from '../Utils/getEndpoint';
 import CountCards from '../components/CountCards/CountCards';
 import { setIsLoadingCards } from '../ReduxStore/IsLoadingCardsSlice/IsLoadingCardsSlice';
 
 export default function Mainpage() {
   const { isOpen, setIsOpen: setIsOpenDetails } = useCharacterDetailsContext();
-  const searchValue = useAppSelector((state) => state.search.searchValue);
+  const searchValue = useAppSelector(searchStateValue);
   const characters = useAppSelector((state) => state.characters.list);
   const countCards = useAppSelector((state) => state.countCards);
   const dispatch = useAppDispatch();
   const { data, isLoading } = useSearhCharactersQuery(searchValue);
+  const [getCharacters] = useLazyPaginationCharactersQuery();
 
   const [, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -37,27 +41,17 @@ export default function Mainpage() {
     setIsOpenDetails(false);
     navigate('/home');
   };
-  //ToDo: delete after checking by mentor
-  // const getData = (value: string) => {
-  //   fetch(`${value}`)
-  //     .then<IResponse>((data) => data.json())
-  //     .then((data) => {
-  //       dispatch(setCharacters(data.results));
-  //       setPagination(data.info);
-  //       data.info && setPage(getPageNumber(data.info));
-  //       setSearchParams({ page: page.toString() });
-  //     });
-  // };
-  // ToDo: try to implement RTKquery
   const getData = (value: string) => {
     if (!data) {
       return;
     }
-    dispatch(setCharacters(data.results));
-    setPagination(data.info);
-    data.info && setPage(getPageNumber(data.info));
-    setSearchParams({ page: page.toString() });
-    dispatch(setSearchValue(getEndpoint(value)));
+    getCharacters(getEndpoint(value))
+      .unwrap()
+      .then((data) => {
+        dispatch(setCharacters(data.results));
+        setPagination(data.info);
+        data.info && setPage(getPageNumber(data.info));
+      });
   };
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import { ICharacter } from '../../types/Character';
 import { useCharacterDetailsContext } from '../../store';
 import { useGetCharacterByIdQuery } from '../../components/Api/CharactersApi';
-import { useAppDispatch } from '../../ReduxStore/hooks';
+import { useAppDispatch, useAppSelector } from '../../ReduxStore/hooks';
 import { setIsLoadingDetails } from '../../ReduxStore';
 
 function CharacterDetalils() {
@@ -14,6 +14,9 @@ function CharacterDetalils() {
     useState<ICharacter | null>(null);
   const { isOpen, setIsOpen } = useCharacterDetailsContext();
   const { data, isLoading } = useGetCharacterByIdQuery(characterId || '');
+  const valueIsLoading = useAppSelector(
+    (state) => state.isLoadingDetails.isLoadingDetails
+  );
 
   useLayoutEffect(() => {
     if (isOpen) {
@@ -21,15 +24,6 @@ function CharacterDetalils() {
     }
     setIsOpen(true);
   }, [isOpen, setIsOpen]);
-  //ToDo: delete after checking by mentor
-  // useEffect(() => {
-  //   if (!characterId) {
-  //     return;
-  //   }
-  //   fetch(`https://rickandmortyapi.com/api/character/${characterId}`)
-  //     .then<ICharacter>((data) => data.json())
-  //     .then((data) => setCaracterDetailPage(data));
-  // }, [characterId]);
   useEffect(() => {
     if (!characterId || !data) {
       return;
@@ -42,7 +36,9 @@ function CharacterDetalils() {
   }, [dispatch, isLoading]);
   return (
     <>
-      {isOpen ? (
+      {valueIsLoading ? (
+        <div style={{ color: 'red' }}>Loading...</div>
+      ) : isOpen ? (
         <div data-testid={'detail'} className={styles.cardWrapper}>
           <div>
             {characterDetailPage && (

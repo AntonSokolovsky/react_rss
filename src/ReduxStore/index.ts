@@ -25,5 +25,5 @@ export type AppDispatch = typeof store.dispatch;
 export * from './CharactersSlice';
 export * from './SearchSlice';
 export * from './CountCardsSlice';
-export * from './IsLoadingCardsSlice/IsLoadingCardsSlice';
+export * from './IsLoadingCardsSlice';
 export * from './IsLoadingDetailsSlice';

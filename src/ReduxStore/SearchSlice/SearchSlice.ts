@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SearchState } from './SearchSlice.type';
+import { RootState } from '..';
 
 const initialState: SearchState = {
   searchValue: localStorage.getItem('searchValue') || '',
@@ -17,3 +18,4 @@ const searchSlice = createSlice({
 
 export const { setSearchValue } = searchSlice.actions;
 export default searchSlice.reducer;
+export const searchStateValue = (state: RootState) => state.search.searchValue;
