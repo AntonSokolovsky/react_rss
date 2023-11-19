@@ -10,7 +10,7 @@ export default function Search() {
   const [value, setValue] = useState(searchValue);
 
   function search() {
-    dispatch(setSearchValue(value));
+    dispatch(setSearchValue(`?name=${value}`));
     localStorage.setItem('searchValue', value);
   }
 

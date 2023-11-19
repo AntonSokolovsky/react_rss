@@ -9,7 +9,7 @@ export const characterApi = createApi({
   endpoints: (build) => ({
     searhCharacters: build.query<IResponse, string>({
       query: (value = '') => ({
-        url: `/character?name=${value}`,
+        url: `/character${value}`,
       }),
     }),
   }),
