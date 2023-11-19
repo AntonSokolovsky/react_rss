@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IResponse } from '../../types/Response';
+import { ICharacter } from '../../types/Character';
 
 const baseUrl = 'https://rickandmortyapi.com/api';
 
@@ -12,7 +13,13 @@ export const characterApi = createApi({
         url: `/character${value}`,
       }),
     }),
+    getCharacterById: build.query<ICharacter, string>({
+      query: (value = '') => ({
+        url: `/character/${value}`,
+      }),
+    }),
   }),
 });
 
-export const { useSearhCharactersQuery } = characterApi;
+export const { useSearhCharactersQuery, useGetCharacterByIdQuery } =
+  characterApi;

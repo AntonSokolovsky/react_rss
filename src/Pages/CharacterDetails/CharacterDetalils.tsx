@@ -3,12 +3,14 @@ import styles from './CharacterDetails.module.css';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { ICharacter } from '../../types/Character';
 import { useCharacterDetailsContext } from '../../store';
+import { useGetCharacterByIdQuery } from '../../components/Api/CharactersApi';
 
 function CharacterDetalils() {
   const { characterId } = useParams();
   const [characterDetailPage, setCaracterDetailPage] =
     useState<ICharacter | null>(null);
   const { isOpen, setIsOpen } = useCharacterDetailsContext();
+  const { data } = useGetCharacterByIdQuery(characterId || '');
 
   useLayoutEffect(() => {
     if (isOpen) {
@@ -16,15 +18,21 @@ function CharacterDetalils() {
     }
     setIsOpen(true);
   }, [isOpen, setIsOpen]);
-
+  //ToDo: delete after checking by mentor
+  // useEffect(() => {
+  //   if (!characterId) {
+  //     return;
+  //   }
+  //   fetch(`https://rickandmortyapi.com/api/character/${characterId}`)
+  //     .then<ICharacter>((data) => data.json())
+  //     .then((data) => setCaracterDetailPage(data));
+  // }, [characterId]);
   useEffect(() => {
-    if (!characterId) {
+    if (!characterId || !data) {
       return;
     }
-    fetch(`https://rickandmortyapi.com/api/character/${characterId}`)
-      .then<ICharacter>((data) => data.json())
-      .then((data) => setCaracterDetailPage(data));
-  }, [characterId]);
+    setCaracterDetailPage(data);
+  }, [characterId, data]);
   return (
     <>
       {isOpen ? (
