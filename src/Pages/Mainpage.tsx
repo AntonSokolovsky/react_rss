@@ -11,11 +11,13 @@ import { setCharacters, setSearchValue } from '../ReduxStore';
 import { useAppDispatch, useAppSelector } from '../ReduxStore/hooks';
 import { useSearhCharactersQuery } from '../components/Api/CharactersApi';
 import { getEndpoint } from '../Utils/getEndpoint';
+import CountCards from '../components/CountCards/CountCards';
 
 export default function Mainpage() {
   const { isOpen, setIsOpen: setIsOpenDetails } = useCharacterDetailsContext();
   const searchValue = useAppSelector((state) => state.search.searchValue);
   const characters = useAppSelector((state) => state.characters.list);
+  const countCards = useAppSelector((state) => state.countCards);
   const dispatch = useAppDispatch();
   const { data } = useSearhCharactersQuery(searchValue);
 
@@ -62,7 +64,7 @@ export default function Mainpage() {
       dispatch(setCharacters(data.results));
       setPagination(data.info);
     }
-  }, [dispatch, data]);
+  }, [dispatch, data, countCards]);
 
   useEffect(() => {
     setSearchParams({ page: page.toString() });
@@ -74,6 +76,7 @@ export default function Mainpage() {
         <h1>Rick & Morty characters</h1>
         <SearchBar />
         <Cards />
+        <CountCards />
         {!!characters?.length && (
           <Pagination
             page={page}
