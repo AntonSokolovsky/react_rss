@@ -1,0 +1,19 @@
+.pagination {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.button {
+  display: block;
+}
+
+.buttonLeft {
+  display: block;
+}
+
+.buttonRight {
+  display: block;
+}
+
+.numberPage {
+  display: block;
+}
