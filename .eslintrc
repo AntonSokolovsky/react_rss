@@ -1,13 +1,13 @@
 {
-    "root": true,
-    "extends": [
-      "plugin:react/recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:prettier/recommended",
-      "prettier"
-    ],
-    "parser": "@typescript-eslint/parser",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+],
+"parser": "@typescript-eslint/parser",
     "parserOptions": {
       "ecmaFeatures": {
         "jsx": true
@@ -49,4 +49,4 @@
         "version": "detect"
       }
     }
-  }
+}
