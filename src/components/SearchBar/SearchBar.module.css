@@ -1,0 +1,9 @@
+.searchWrap {
+    display: flex;
+}
+.searchInput {
+    border: solid 1px blue;
+}
+.searchButton {
+    border: none;
+}
