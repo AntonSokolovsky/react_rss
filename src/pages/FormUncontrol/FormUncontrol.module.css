@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.titleField {
+}
+
+.input {
+}
+
+.error {
+  display: block;
+  height: 2rem;
+  color: red;
+}

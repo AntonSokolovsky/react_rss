@@ -1,3 +1,5 @@
+import styles from './HomePage.module.css';
+
 export default function HomePage() {
-  return <div>main</div>;
+  return <div className={styles.container}>main</div>;
 }

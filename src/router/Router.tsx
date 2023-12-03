@@ -1,18 +1,13 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { lazy } from 'react';
+import { PATH } from '../constants/Path';
 
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'));
 const FormUncontrol = lazy(
   () => import('../pages/FormUncontrol/FormUncontrol')
 );
 const FormWithHook = lazy(() => import('../pages/FormWithHook/FormWithHook'));
-
-export const PATH = {
-  HOME: 'home',
-  FORM_WITH_HOOK: 'form-with-hook',
-  FORM_UNCONTROL: 'form-uncontrol',
-};
 
 export const router = createBrowserRouter([
   {

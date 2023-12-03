@@ -1,0 +1,38 @@
+.container {
+  display: block;
+  border-radius: 7px;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wrapper input {
+  width: 100%;
+}
+
+.wrapper label {
+  padding: 10px 0px 10px 20px;
+}
+
+.suggestions {
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  z-index: 999;
+  cursor: pointer;
+  width: 100%;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.suggestions > div {
+  padding: 15px 25px;
+  transition: all 0.1s ease;
+  background-color: white;
+}
