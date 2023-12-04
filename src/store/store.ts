@@ -9,7 +9,10 @@ const store = configureStore({
     errorField: errorFieldReducer,
     countries: countriesReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(),
 });
 
 export default store;

@@ -21,7 +21,7 @@ export const FormSchema = Yup.object().shape({
     .oneOf([Yup.ref('password')], 'must match with value of password field')
     .required('required field'),
   gender: Yup.string().required('required field'),
-  accept: Yup.string().required(),
+  accept: Yup.boolean().isTrue('Must be checked').required(),
   uploadPicture: Yup.mixed()
     .test('fileSize', 'Must be jpeg or png and size < 5mb', (value) => {
       if (value instanceof File) {
@@ -41,7 +41,6 @@ export const FormSchema = Yup.object().shape({
             return ['image/png', 'image/jpeg'].includes(value[0].type);
           }
         }
-    }),
-  // .required('required field'),
+    }) as Yup.MixedSchema<File>,
   country: Yup.string().required('required field'),
 });

@@ -3,11 +3,12 @@ import styles from './InputAutoComplete.module.css';
 import { ErrorsFields, IErrorsFields } from '../../validation/ErrorsFields';
 import { IPropsAutoComplete } from './InputAutocomplete.type';
 
-export default function InputAutoComplete({
+const InputAutoComplete = ({
   label,
   countries,
   error,
-}: IPropsAutoComplete) {
+  register,
+}: IPropsAutoComplete) => {
   const [searchResult, setSearchResult] = useState<string[] | []>([]);
   const [isHideSearchResult, setIsHideSuggs] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
@@ -33,12 +34,13 @@ export default function InputAutoComplete({
     setIsHideSuggs(true);
     forceUpdate();
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <label htmlFor="tag-input">{label}</label>
         <input
+          {...(register ? { ...register('country') } : null)}
+          id={'tag-input'}
           style={{
             borderColor:
               ErrorsFields[error as keyof IErrorsFields] !== ' '
@@ -46,7 +48,6 @@ export default function InputAutoComplete({
                 : 'black',
           }}
           type="search"
-          name="country"
           value={selectedValue}
           onChange={handleChange}
           onKeyUp={handler}
@@ -70,4 +71,6 @@ export default function InputAutoComplete({
       </div>
     </div>
   );
-}
+};
+
+export default InputAutoComplete;

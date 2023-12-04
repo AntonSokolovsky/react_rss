@@ -1,12 +1,14 @@
 import { FormSchema } from '../../validation/FormSchema';
 import styles from './FormWithHook.module.css';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import InputAutoComplete from '../../components/InputAutocomplete/InputAutocomplete';
 import { ErrorsFields } from '../../validation/ErrorsFields';
 import { Fields } from '../FormUncontrol/Fields';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { useNavigate } from 'react-router-dom';
+import { IFormData } from '../../types/FormDataType';
+import { setFormData } from '../../store/FormDataSlice/FormDataSlice';
 
 type FieldsEnum =
   | 'name'
@@ -20,24 +22,26 @@ type FieldsEnum =
   | 'country';
 
 export default function FormWithHook() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
     register,
     reset,
     formState: { errors },
     handleSubmit,
-  } = useForm({
-    mode: 'onBlur',
+  } = useForm<IFormData>({
+    mode: 'all',
     resolver: yupResolver(FormSchema),
   });
-  const onSubmit = () => {
+  const onSubmit: SubmitHandler<IFormData> = (data) => {
+    dispatch(setFormData(data));
     reset();
     navigate('/home');
   };
   const countries = useAppSelector((state) => state.countries.countries);
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         {Fields.map(({ name, label, error, type, select }) => (
           <div key={name}>
             <label className={styles.label}>
@@ -52,7 +56,11 @@ export default function FormWithHook() {
                   type={type}
                 />
               ) : (
-                <select className={styles.input} name={name}>
+                <select
+                  {...register(name as FieldsEnum)}
+                  className={styles.input}
+                  name={name}
+                >
                   {select.map(({ value, label }) => (
                     <option key={value} value={value}>
                       {label}
@@ -65,6 +73,7 @@ export default function FormWithHook() {
           </div>
         ))}
         <InputAutoComplete
+          register={register}
           label="Country"
           countries={countries}
           error={'country'}
