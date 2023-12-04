@@ -23,13 +23,25 @@ export const FormSchema = Yup.object().shape({
   gender: Yup.string().required('required field'),
   accept: Yup.string().required(),
   uploadPicture: Yup.mixed()
-    .test(
-      'fileSize',
-      'File size is too big',
-      (value) => (value as File).size <= 500000
-    )
-    .test('fileType', 'Must be jpeg or png', (value) =>
-      ['image/png', 'image/jpeg'].includes((value as File).type)
-    ),
+    .test('fileSize', 'Must be jpeg or png and size < 5mb', (value) => {
+      if (value instanceof File) {
+        return value.size <= 500000;
+      } else if (value instanceof FileList) {
+        if (value.length) {
+          return value[0].size <= 500000;
+        }
+      }
+    })
+    .test('fileType', 'Must be jpeg or png', (value) => {
+      if (value && value !== 'undefined')
+        if (value instanceof File) {
+          return ['image/png', 'image/jpeg'].includes((value as File).type);
+        } else if (value instanceof FileList) {
+          if (value.length) {
+            return ['image/png', 'image/jpeg'].includes(value[0].type);
+          }
+        }
+    }),
+  // .required('required field'),
   country: Yup.string().required('required field'),
 });

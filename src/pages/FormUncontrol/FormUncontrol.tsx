@@ -6,9 +6,13 @@ import { validate } from '../../validation/Validation';
 import { FormSchema } from '../../validation/FormSchema';
 import { FormFields } from '../../types/FormFields';
 import InputAutoComplete from '../../components/InputAutocomplete/InputAutocomplete';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { useNavigate } from 'react-router-dom';
+import { setFormData } from '../../store/FormDataSlice/FormDataSlice';
 
 export default function FormUncontrol() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const countries = useAppSelector((state) => state.countries.countries);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const handleSubmit: React.FormEventHandler<HTMLFormElement & FormFields> = (
@@ -23,13 +27,17 @@ export default function FormUncontrol() {
     }
     validate(FormSchema, obj);
     forceUpdate();
+    if (ErrorsFields['confirmPassword'] === ' ') {
+      dispatch(setFormData(obj));
+      navigate('/home');
+    }
   };
 
   return (
     <form className={styles.form} autoComplete="off" onSubmit={handleSubmit}>
       {Fields.map(({ name, label, error, type, select }) => (
-        <>
-          <label className={styles.label} key={name}>
+        <div key={name}>
+          <label className={styles.label}>
             <span className={styles.titleField}>{label}</span>
             {!select ? (
               <input
@@ -51,7 +59,7 @@ export default function FormUncontrol() {
             )}
           </label>
           <span className={styles.error}>{ErrorsFields[error]}</span>
-        </>
+        </div>
       ))}
       <InputAutoComplete
         label="Country"

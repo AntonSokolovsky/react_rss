@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import styles from './InputAutoComplete.module.css';
 import { ErrorsFields, IErrorsFields } from '../../validation/ErrorsFields';
 import { IPropsAutoComplete } from './InputAutocomplete.type';
@@ -11,6 +11,7 @@ export default function InputAutoComplete({
   const [searchResult, setSearchResult] = useState<string[] | []>([]);
   const [isHideSearchResult, setIsHideSuggs] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const handler: React.FormEventHandler<HTMLInputElement> = (event) => {
     setSearchResult(
@@ -24,11 +25,13 @@ export default function InputAutoComplete({
     const input = event.currentTarget.value;
     setIsHideSuggs(false);
     setSelectedValue(input);
+    forceUpdate();
   };
 
   const hideList = (value: string) => {
     setSelectedValue(value);
     setIsHideSuggs(true);
+    forceUpdate();
   };
 
   return (
