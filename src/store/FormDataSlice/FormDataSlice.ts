@@ -3,14 +3,15 @@ import { IInitialStateFormData } from './FormDataSlice.type';
 import { IFormData } from '../../types/FormDataType';
 
 const initialState: IInitialStateFormData = {
-  formData: null,
+  formData: [],
 };
 
 const formDataSlice = createSlice({
-  name: 'characters',
+  name: 'formData',
   initialState,
   reducers: {
-    setFormData(state, action: PayloadAction<IFormData>) {
+    setFormData(state, action: PayloadAction<IFormData[]>) {
+      // state.formData?.push(action.payload);
       state.formData = action.payload;
     },
   },

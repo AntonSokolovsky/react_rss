@@ -13,6 +13,7 @@ import { setFormData } from '../../store/FormDataSlice/FormDataSlice';
 export default function FormUncontrol() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const stateFormData = useAppSelector((state) => state.formData.formData);
   const countries = useAppSelector((state) => state.countries.countries);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const handleSubmit: React.FormEventHandler<HTMLFormElement & FormFields> = (
@@ -28,7 +29,9 @@ export default function FormUncontrol() {
     validate(FormSchema, obj);
     forceUpdate();
     if (ErrorsFields['confirmPassword'] === ' ') {
-      dispatch(setFormData(obj));
+      const newStateData = [...stateFormData];
+      newStateData.push(obj);
+      dispatch(setFormData(newStateData));
       navigate('/home');
     }
   };

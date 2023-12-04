@@ -22,6 +22,7 @@ type FieldsEnum =
   | 'country';
 
 export default function FormWithHook() {
+  const stateFormData = useAppSelector((state) => state.formData.formData);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -34,7 +35,9 @@ export default function FormWithHook() {
     resolver: yupResolver(FormSchema),
   });
   const onSubmit: SubmitHandler<IFormData> = (data) => {
-    dispatch(setFormData(data));
+    const newStateData = [...stateFormData];
+    newStateData.push(data);
+    dispatch(setFormData(newStateData));
     reset();
     navigate('/home');
   };
